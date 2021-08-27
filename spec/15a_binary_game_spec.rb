@@ -365,6 +365,7 @@ describe BinaryGame do
       allow(binary_search).to receive(:min).and_return(1)
       allow(binary_search).to receive(:max).and_return(10)
       allow(binary_search).to receive(:guess).and_return(4)
+      allow(game_display).to receive(:display_guess).with(binary_search)
       allow(binary_search).to receive(:make_guess).and_return(5)
       allow(binary_search).to receive(:update_range).and_return(4)
     end
@@ -376,11 +377,14 @@ describe BinaryGame do
 
     # Method with Outgoing Command -> Test that a message is sent
     it 'sends make_guess' do
-      expect { binary_search }.to receive()
+      expect(binary_search).to receive(:make_guess)
+      game_display.display_turn_order(binary_search)
     end
 
     # Method with Outgoing Command -> Test that a message is sent
-    xit 'sends update_range' do
+    it 'sends update_range' do
+      expect(binary_search).to receive(:update_range)
+      game_display.display_turn_order(binary_search)
     end
 
     # Using method expectations can be confusing. Stubbing the methods above
